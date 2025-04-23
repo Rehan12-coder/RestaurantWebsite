@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservations | Luxury Dining</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#5C4B37',   // Earthy brown
+                        secondary: '#D4A76A', // Gold accent
+                        accent: '#3A2E24',    // Dark brown
+                        light: '#F8F5F2',     // Cream background
+                    },
+                    fontFamily: {
+                        sans: ['"Inter"', 'sans-serif'],
+                        display: ['"Playfair Display"', 'serif'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+        
+        .reservation-card {
+            transition: all 0.3s ease;
+        }
+        
+        .reservation-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .availability-badge {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+        
+        .available {
+            background-color: #4CAF50;
+        }
+        
+        .limited {
+            background-color: #FFC107;
+        }
+        
+        .unavailable {
+            background-color: #F44336;
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            ring: none;
+        }
+        
+        .modal {
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+    </style>
+</head>
+<body class="font-sans bg-light">
+    <!-- Reservation Header -->
+    <section class="relative py-20 md:py-28 bg-accent text-white">
+        <div class="absolute inset-0 bg-black/40"></div>
+        <div class="max-w-6xl mx-auto px-6 relative z-10 text-center">
+            <h1 class="text-4xl md:text-5xl font-display font-bold mb-4 animate-fade-in">Reserve Your Table</h1>
+            <p class="text-xl max-w-2xl mx-auto opacity-90 animate-fade-in">
+                Secure your dining experience at our luxury restaurant. Our team will confirm your reservation within 24 hours.
+            </p>
+        </div>
+    </section>
+
+    <!-- Reservation Form -->
+    <section class="max-w-4xl mx-auto px-6 py-16">
+        <div class="bg-white rounded-xl shadow-md overflow-hidden reservation-card">
+            <div class="p-8 md:p-10">
+                <h2 class="text-2xl font-display font-bold text-primary mb-6">Reservation Details</h2>
+                
+                <form id="reservationForm" class="space-y-6">
+                    <!-- Personal Information -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="fullName" class="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
+                            <input type="text" id="fullName" name="fullName" required 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent transition">
+                        </div>
+                        <div>
+                            <label for="contactNumber" class="block text-sm font-medium text-gray-700 mb-1">Contact Number *</label>
+                            <input type="tel" id="contactNumber" name="contactNumber" required 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent transition">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address *</label>
+                            <input type="email" id="email" name="email" required 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent transition">
+                        </div>
+                    </div>
+                    
+                    <!-- Date & Time -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="reservationDate" class="block text-sm font-medium text-gray-700 mb-1">Date *</label>
+                            <input type="date" id="reservationDate" name="reservationDate" required 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent transition">
+                        </div>
+                        <div>
+                            <label for="reservationTime" class="block text-sm font-medium text-gray-700 mb-1">Time *</label>
+                            <select id="reservationTime" name="reservationTime" required 
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent transition">
+                                <option value="" disabled selected>Select time</option>
+                                <option value="11:00">11:00 AM</option>
+                                <option value="12:00">12:00 PM</option>
+                                <option value="13:00">1:00 PM</option>
+                                <option value="14:00">2:00 PM</option>
+                                <option value="18:00">6:00 PM</option>
+                                <option value="19:00">7:00 PM</option>
+                                <option value="20:00">8:00 PM</option>
+                                <option value="21:00">9:00 PM</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Seating Type -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-3">Seating Type *</label>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <!-- Normal Table -->
+                            <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-secondary transition has-[:checked]:border-secondary has-[:checked]:bg-secondary/10">
+                                <input type="radio" name="seatingType" value="normalTable" class="hidden peer" required>
+                                <div class="mr-3">
+                                    <div class="availability-badge available"></div>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium">Normal Table</h3>
+                                    <p class="text-sm text-gray-600">8 available</p>
+                                    <p class="text-xs text-gray-500 mt-1">Standard seating (2-4 guests)</p>
+                                </div>
+                            </label>
+                            
+                            <!-- Family Cabin -->
+                            <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-secondary transition has-[:checked]:border-secondary has-[:checked]:bg-secondary/10">
+                                <input type="radio" name="seatingType" value="familyCabin" class="hidden peer">
+                                <div class="mr-3">
+                                    <div class="availability-badge limited"></div>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium">Family Cabin</h3>
+                                    <p class="text-sm text-gray-600">4 available</p>
+                                    <p class="text-xs text-gray-500 mt-1">Private space (4-6 guests)</p>
+                                </div>
+                            </label>
+                            
+                            <!-- Party Hall -->
+                            <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-secondary transition has-[:checked]:border-secondary has-[:checked]:bg-secondary/10">
+                                <input type="radio" name="seatingType" value="partyHall" class="hidden peer">
+                                <div class="mr-3">
+                                    <div class="availability-badge available"></div>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium">Party Hall</h3>
+                                    <p class="text-sm text-gray-600">2 available</p>
+                                    <p class="text-xs text-gray-500 mt-1">Large gatherings (10+ guests)</p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Number of Guests -->
+                    <div>
+                        <label for="guestCount" class="block text-sm font-medium text-gray-700 mb-1">Number of Guests *</label>
+                        <select id="guestCount" name="guestCount" required 
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent transition">
+                            <option value="" disabled selected>Select number of guests</option>
+                            <option value="1">1 person</option>
+                            <option value="2">2 people</option>
+                            <option value="3">3 people</option>
+                            <option value="4">4 people</option>
+                            <option value="5">5 people</option>
+                            <option value="6">6 people</option>
+                            <option value="7">7 people</option>
+                            <option value="8">8 people</option>
+                            <option value="9">9 people</option>
+                            <option value="10">10 people</option>
+                            <option value="11">11-15 people</option>
+                            <option value="16">16-20 people</option>
+                            <option value="21">20+ people</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Additional Requests -->
+                    <div>
+                        <label for="specialRequests" class="block text-sm font-medium text-gray-700 mb-1">Additional Requests</label>
+                        <textarea id="specialRequests" name="specialRequests" rows="4" 
+                                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent transition" 
+                                  placeholder="Dietary restrictions, special occasions, etc."></textarea>
+                    </div>
+                    
+                    <!-- Submit Button -->
+                    <div class="pt-4">
+                        <button type="submit" class="w-full bg-primary text-white py-4 px-6 rounded-lg font-medium hover:bg-opacity-90 transition transform hover:scale-[1.01]">
+                            Confirm Reservation
+                        </button>
+                    </div>
+                    
+                    <p class="text-sm text-gray-500 text-center">
+                        We'll contact you to confirm your reservation. For same-day bookings, please call us directly.
+                    </p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Info -->
+    <section class="bg-primary text-white py-12">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="bg-secondary/20 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-phone-alt text-secondary text-xl"></i>
+                    </div>
+                    <h3 class="font-display font-bold mb-2">By Phone</h3>
+                    <p class="opacity-90">+92 300 1234567</p>
+                    <p class="opacity-80 text-sm mt-1">Daily from 10AM to 10PM</p>
+                </div>
+                <div class="text-center">
+                    <div class="bg-secondary/20 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-envelope text-secondary text-xl"></i>
+                    </div>
+                    <h3 class="font-display font-bold mb-2">By Email</h3>
+                    <p class="opacity-90">reservations@luxurydining.com</p>
+                    <p class="opacity-80 text-sm mt-1">Response within 24 hours</p>
+                </div>
+                <div class="text-center">
+                    <div class="bg-secondary/20 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-map-marker-alt text-secondary text-xl"></i>
+                    </div>
+                    <h3 class="font-display font-bold mb-2">Location</h3>
+                    <p class="opacity-90">123 Gourmet Street, Karachi</p>
+                    <p class="opacity-80 text-sm mt-1">Open daily 11AM to 11PM</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmationModal" class="modal fixed inset-0 bg-black/50 flex items-center justify-center z-50 opacity-0 invisible transition">
+        <div class="bg-white rounded-xl max-w-md w-full mx-4 p-8 text-center transform transition-all scale-95">
+            <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-check text-green-500 text-3xl"></i>
+            </div>
+            <h3 class="text-2xl font-display font-bold text-gray-800 mb-3">Thank You!</h3>
+            <p class="text-gray-600 mb-6">Your reservation request has been received. We will contact you within 24 hours to confirm your booking.</p>
+            <button onclick="closeModal()" class="w-full bg-primary text-white py-3 px-6 rounded-lg font-medium hover:bg-opacity-90 transition">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Set minimum date to today
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('reservationDate').min = today;
+            
+            // Add animation to form elements
+            const formElements = document.querySelectorAll('input, select, textarea, label');
+            formElements.forEach((el, index) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(10px)';
+                el.style.animation = `fadeIn 0.5s ease-in-out forwards ${index * 0.1}s`;
+            });
+            
+            // Form submission handler
+            document.getElementById('reservationForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                showModal();
+                this.reset();
+            });
+        });
+        
+        function showModal() {
+            const modal = document.getElementById('confirmationModal');
+            modal.classList.remove('opacity-0', 'invisible');
+            modal.classList.add('opacity-100', 'visible');
+            setTimeout(() => {
+                modal.querySelector('div').classList.remove('scale-95');
+                modal.querySelector('div').classList.add('scale-100');
+            }, 10);
+        }
+        
+        function closeModal() {
+            const modal = document.getElementById('confirmationModal');
+            modal.querySelector('div').classList.remove('scale-100');
+            modal.querySelector('div').classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.remove('opacity-100', 'visible');
+                modal.classList.add('opacity-0', 'invisible');
+            }, 150);
+        }
+    </script>
+</body>
+</html>

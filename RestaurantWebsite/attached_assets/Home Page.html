@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Epicure | Modern Dining Experience</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF6B6B',
+                        secondary: '#4ECDC4',
+                        dark: '#292F36',
+                        light: '#F7FFF7',
+                    },
+                    fontFamily: {
+                        sans: ['"Inter"', 'sans-serif'],
+                        display: ['"Playfair Display"', 'serif'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 1s ease-in-out',
+                        'slide-up': 'slideUp 0.8s ease-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        
+        .dish-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .testimonial-card:hover {
+            transform: scale(1.03);
+        }
+    </style>
+</head>
+<body class="font-sans bg-light text-dark">
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/80 backdrop-blur-md shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <span class="text-2xl font-bold text-primary">EPICURE</span>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="font-medium hover:text-primary transition">Home</a>
+                    <a href="#" class="font-medium hover:text-primary transition">Menu</a>
+                    <a href="#" class="font-medium hover:text-primary transition">About</a>
+                    <a href="#" class="font-medium hover:text-primary transition">Contact</a>
+                    <a href="#" class="px-4 py-2 bg-primary text-white rounded-full hover:bg-opacity-90 transition">Reservations</a>
+                </div>
+                
+                <button class="md:hidden focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative h-screen flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 bg-black/30 z-10"></div>
+        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+             alt="Delicious food" 
+             class="absolute inset-0 w-full h-full object-cover object-center">
+        
+        <div class="relative z-20 text-center px-6 max-w-4xl mx-auto animate-fade-in">
+            <h1 class="text-4xl md:text-6xl font-display font-bold text-white mb-6 animate-slide-up">
+                Crafting Culinary <span class="text-primary">Masterpieces</span>
+            </h1>
+            <p class="text-xl text-white mb-10 opacity-90 max-w-2xl mx-auto animate-slide-up">
+                Experience the perfect harmony of flavors with our seasonally inspired dishes, crafted from the finest locally-sourced ingredients.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4 animate-slide-up">
+                <a href="#" class="px-8 py-4 bg-primary text-white rounded-full text-lg font-medium hover:bg-opacity-90 transition transform hover:scale-105">
+                    Explore Menu
+                </a>
+                <a href="#" class="px-8 py-4 bg-white text-dark rounded-full text-lg font-medium hover:bg-opacity-90 transition transform hover:scale-105">
+                    Book a Table
+                </a>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-10 left-0 right-0 flex justify-center z-20 animate-bounce">
+            <a href="#signature" class="text-white hover:text-primary transition">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                </svg>
+            </a>
+        </div>
+    </section>
+
+    <!-- Signature Dishes -->
+    <section id="signature" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-primary font-medium">OUR SPECIALTIES</span>
+                <h2 class="text-3xl md:text-4xl font-display font-bold mt-2">Signature Dishes</h2>
+                <div class="w-20 h-1 bg-primary mx-auto mt-4"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <!-- Dish 1 -->
+                <div class="dish-card bg-white rounded-2xl overflow-hidden shadow-lg transition duration-500">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80" 
+                             alt="Truffle Pasta" 
+                             class="w-full h-full object-cover transition duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <h3 class="text-xl font-display font-bold">Black Truffle Pasta</h3>
+                            <span class="bg-primary text-white px-3 py-1 rounded-full text-sm">$24</span>
+                        </div>
+                        <p class="text-gray-600 mt-3">Handmade pasta with seasonal black truffle, parmesan cream, and wild mushrooms.</p>
+                        <button class="mt-4 text-primary font-medium hover:underline">View Details</button>
+                    </div>
+                </div>
+                
+                <!-- Dish 2 -->
+                <div class="dish-card bg-white rounded-2xl overflow-hidden shadow-lg transition duration-500">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1559847844-5315695dadae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2098&q=80" 
+                             alt="Beef Wellington" 
+                             class="w-full h-full object-cover transition duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <h3 class="text-xl font-display font-bold">Beef Wellington</h3>
+                            <span class="bg-primary text-white px-3 py-1 rounded-full text-sm">$38</span>
+                        </div>
+                        <p class="text-gray-600 mt-3">Premium beef tenderloin wrapped in mushroom duxelles and flaky puff pastry.</p>
+                        <button class="mt-4 text-primary font-medium hover:underline">View Details</button>
+                    </div>
+                </div>
+                
+                <!-- Dish 3 -->
+                <div class="dish-card bg-white rounded-2xl overflow-hidden shadow-lg transition duration-500">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" 
+                             alt="Chocolate Soufflé" 
+                             class="w-full h-full object-cover transition duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <h3 class="text-xl font-display font-bold">Chocolate Soufflé</h3>
+                            <span class="bg-primary text-white px-3 py-1 rounded-full text-sm">$14</span>
+                        </div>
+                        <p class="text-gray-600 mt-3">Warm chocolate soufflé with a molten center, served with vanilla bean ice cream.</p>
+                        <button class="mt-4 text-primary font-medium hover:underline">View Details</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-16">
+                <a href="#" class="inline-block px-8 py-3 border-2 border-primary text-primary rounded-full font-medium hover:bg-primary hover:text-white transition">
+                    View Full Menu
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-primary font-medium">TESTIMONIALS</span>
+                <h2 class="text-3xl md:text-4xl font-display font-bold mt-2">What Our Guests Say</h2>
+                <div class="w-20 h-1 bg-primary mx-auto mt-4"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="testimonial-card bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 text-xl">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic mb-6">"The truffle pasta was absolutely divine! Every bite was a burst of flavor. The service was impeccable and the ambiance perfect for our anniversary dinner."</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sarah J." class="w-12 h-12 rounded-full object-cover mr-4">
+                        <div>
+                            <h4 class="font-bold">Sarah J.</h4>
+                            <p class="text-gray-500 text-sm">Food Critic</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="testimonial-card bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 text-xl">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic mb-6">"Best dining experience in the city! The Beef Wellington was cooked to perfection, and the wine pairing suggestions were spot on. Can't wait to come back!"</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Michael T." class="w-12 h-12 rounded-full object-cover mr-4">
+                        <div>
+                            <h4 class="font-bold">Michael T.</h4>
+                            <p class="text-gray-500 text-sm">Regular Guest</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="testimonial-card bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 text-xl">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic mb-6">"The chocolate soufflé was worth every calorie! The staff made excellent recommendations and the presentation of each dish was like edible art."</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Emma L." class="w-12 h-12 rounded-full object-cover mr-4">
+                        <div>
+                            <h4 class="font-bold">Emma L.</h4>
+                            <p class="text-gray-500 text-sm">Food Blogger</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Story -->
+    <section class="py-20 bg-gradient-to-r from-dark to-gray-800 text-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col lg:flex-row items-center">
+                <div class="lg:w-1/2 mb-10 lg:mb-0 lg:pr-12">
+                    <span class="text-primary font-medium">OUR PHILOSOPHY</span>
+                    <h2 class="text-3xl md:text-4xl font-display font-bold mt-2 mb-6">Crafting Memorable Dining Experiences</h2>
+                    <p class="text-gray-300 mb-6">Founded in 2015, Epicure began as a small bistro with a big dream: to redefine modern dining through exceptional cuisine, warm hospitality, and sustainable practices.</p>
+                    <p class="text-gray-300 mb-8">We partner with local farmers and artisans to bring you the freshest seasonal ingredients, transformed into culinary masterpieces by our award-winning chefs.</p>
+                    
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="flex items-start">
+                            <div class="bg-primary bg-opacity-20 p-3 rounded-full mr-4">
+                                <i class="fas fa-leaf text-primary text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-1">Sustainable Sourcing</h4>
+                                <p class="text-gray-400 text-sm">Local, organic ingredients</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="bg-primary bg-opacity-20 p-3 rounded-full mr-4">
+                                <i class="fas fa-utensils text-primary text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-1">Artisanal Craft</h4>
+                                <p class="text-gray-400 text-sm">Handmade with passion</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="bg-primary bg-opacity-20 p-3 rounded-full mr-4">
+                                <i class="fas fa-wine-glass-alt text-primary text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-1">Perfect Pairings</h4>
+                                <p class="text-gray-400 text-sm">Curated wine selection</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="bg-primary bg-opacity-20 p-3 rounded-full mr-4">
+                                <i class="fas fa-heart text-primary text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-1">Community Focus</h4>
+                                <p class="text-gray-400 text-sm">Giving back initiatives</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/2 relative">
+                    <div class="glass-effect rounded-2xl overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" 
+                             alt="Chef preparing food" 
+                             class="w-full h-auto object-cover">
+                    </div>
+                    <div class="absolute -bottom-6 -left-6 bg-primary p-6 rounded-2xl shadow-xl hidden lg:block">
+                        <h3 class="text-xl font-display font-bold mb-2">15+</h3>
+                        <p class="text-sm">Years combined chef experience</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+                <div>
+                    <h3 class="text-2xl font-display font-bold mb-4">EPICURE</h3>
+                    <p class="text-gray-400 mb-4">Elevating dining to an art form through exceptional cuisine and unforgettable experiences.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-primary transition">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition">Home</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition">Menu</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition">About Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition">Gallery</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-4">Contact Us</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-primary"></i>
+                            <span>123 Gourmet Avenue, Foodie City FC 12345</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-phone-alt mt-1 mr-3 text-primary"></i>
+                            <span>(123) 456-7890</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-envelope mt-1 mr-3 text-primary"></i>
+                            <span>hello@epicure.com</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-4">Opening Hours</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex justify-between">
+                            <span>Monday - Thursday</span>
+                            <span>11:00 - 22:00</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Friday - Saturday</span>
+                            <span>11:00 - 23:00</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Sunday</span>
+                            <span>10:00 - 21:00</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm mb-4 md:mb-0">© 2023 Epicure. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-500 hover:text-primary text-sm transition">Privacy Policy</a>
+                    <a href="#" class="text-gray-500 hover:text-primary text-sm transition">Terms of Service</a>
+                    <a href="#" class="text-gray-500 hover:text-primary text-sm transition">Cookies Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple animation trigger on scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const animateOnScroll = function() {
+                const elements = document.querySelectorAll('.dish-card, .testimonial-card');
+                
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.3;
+                    
+                    if (elementPosition < screenPosition) {
+                        element.style.opacity = '1';
+                        element.style.transform = 'translateY(0)';
+                    }
+                });
+            };
+            
+            // Set initial state
+            const animatedElements = document.querySelectorAll('.dish-card, .testimonial-card');
+            animatedElements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            });
+            
+            // Trigger on load and scroll
+            animateOnScroll();
+            window.addEventListener('scroll', animateOnScroll);
+        });
+    </script>
+</body>
+</html>

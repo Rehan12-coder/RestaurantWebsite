@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spice Route | Menu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF6B6B',
+                        secondary: '#4ECDC4',
+                        accent: '#2E7D32',   // Keeping this color for menu items
+                        light: '#F7FFF7',
+                        dark: '#292F36'
+                    },
+                    fontFamily: {
+                        sans: ['"Poppins"', 'sans-serif'],
+                        display: ['"Almarai"', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        .menu-item {
+            transition: all 0.3s ease;
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .category-btn.active {
+            background-color: #FF6B6B;
+            color: white;
+        }
+        
+        .category-btn:not(.active):hover {
+            background-color: #F7FFF7;
+        }
+        
+        .menu-section {
+            display: none;
+        }
+        
+        .menu-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body class="font-sans bg-light text-dark">
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/80 backdrop-blur-md shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <span class="text-2xl font-bold text-primary">EPICURE</span>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="Home Page.html" class="font-medium hover:text-primary transition">Home</a>
+                    <a href="Menu Page.html" class="font-medium text-primary transition">Menu</a>
+                    <a href="About Page.html" class="font-medium hover:text-primary transition">About</a>
+                    <a href="Contact Us .html" class="font-medium hover:text-primary transition">Contact</a>
+                    <a href="Reservation Page.html" class="px-4 py-2 bg-primary text-white rounded-full hover:bg-opacity-90 transition">Reservations</a>
+                </div>
+                
+                <button id="mobile-menu-button" class="md:hidden focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+                
+                <!-- Mobile Menu -->
+                <div id="mobile-menu" class="absolute top-full left-0 right-0 bg-white shadow-md py-4 px-6 hidden md:hidden">
+                    <div class="flex flex-col space-y-4">
+                        <a href="Home Page.html" class="font-medium hover:text-primary transition">Home</a>
+                        <a href="Menu Page.html" class="font-medium text-primary transition">Menu</a>
+                        <a href="About Page.html" class="font-medium hover:text-primary transition">About</a>
+                        <a href="Contact Us .html" class="font-medium hover:text-primary transition">Contact</a>
+                        <a href="Reservation Page.html" class="px-4 py-2 bg-primary text-white rounded-full hover:bg-opacity-90 transition text-center">Reservations</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Menu Header -->
+    <header class="bg-primary text-white py-16">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-5xl font-display font-bold mb-4">Our Menu</h1>
+            <p class="text-xl max-w-2xl mx-auto">Experience the authentic flavors of Pakistan with our traditional dishes made from generations-old recipes</p>
+        </div>
+    </header>
+
+    <!-- Category Navigation -->
+    <div class="sticky top-0 bg-white shadow-sm z-40">
+        <div class="max-w-6xl mx-auto px-4 overflow-x-auto">
+            <div class="flex space-x-2 py-4">
+                <button onclick="filterMenu('all')" class="category-btn active px-4 py-2 rounded-full whitespace-nowrap">All Items</button>
+                <button onclick="filterMenu('appetizers')" class="category-btn px-4 py-2 rounded-full whitespace-nowrap">Appetizers</button>
+                <button onclick="filterMenu('mains')" class="category-btn px-4 py-2 rounded-full whitespace-nowrap">Main Courses</button>
+                <button onclick="filterMenu('bbq')" class="category-btn px-4 py-2 rounded-full whitespace-nowrap">BBQ Specials</button>
+                <button onclick="filterMenu('breads')" class="category-btn px-4 py-2 rounded-full whitespace-nowrap">Breads & Rice</button>
+                <button onclick="filterMenu('desserts')" class="category-btn px-4 py-2 rounded-full whitespace-nowrap">Desserts</button>
+                <button onclick="filterMenu('beverages')" class="category-btn px-4 py-2 rounded-full whitespace-nowrap">Beverages</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Menu Content -->
+    <main class="max-w-6xl mx-auto px-4 py-12">
+        <!-- Appetizers Section -->
+        <section id="appetizers" class="menu-section">
+            <h2 class="text-3xl font-display font-bold mb-8 pb-2 border-b-2 border-primary inline-block">Appetizers</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-6">
+                <!-- Samosas -->
+                <div class="menu-item bg-white rounded-lg overflow-hidden shadow-md">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                             alt="Samosas" 
+                             class="w-full h-full object-cover transition duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start">
+                            <h3 class="text-xl font-display font-bold">Samosas</h3>
+                            <span class="bg-accent text-white px-3 py-1 rounded-full text-sm">Rs. 120</span>
+                        </div>
+                        <p class="text-gray-600 mt-2">Crispy pastry filled with spiced potatoes and peas, served with mint chutney</p>
+                    </div>
+                </div>
+
+                <!-- Pakoras -->
+                <div class="menu-item bg-white rounded-lg overflow-hidden shadow-md">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1630910395218-9d2e4c0a6e2c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                             alt="Pakoras" 
+                             class="w-full h-full object-cover transition duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start">
+                            <h3 class="text-xl font-display font-bold">Vegetable Pakoras</h3>
+                            <span class="bg-accent text-white px-3 py-1 rounded-full text-sm">Rs. 150</span>
+                        </div>
+                        <p class="text-gray-600 mt-2">Seasonal vegetables dipped in spiced chickpea batter and deep-fried to perfection</p>
+                    </div>
+                </div>
+
+                <!-- Chaat -->
+                <div class="menu-item bg-white rounded-lg overflow-hidden shadow-md">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                             alt="Chaat" 
+                             class="w-full h-full object-cover transition duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start">
+                            <h3 class="text-xl font-display font-bold">Dahi Puri Chaat</h3>
+                            <span class="bg-accent text-white px-3 py-1 rounded-full text-sm">Rs. 180</span>
+                        </div>
+                        <p class="text-gray-600 mt-2">Crisp puris filled with potatoes, chickpeas, yogurt and tangy tamarind chutney</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Courses Section -->
+        <section id="mains" class="menu-section mt-16">
+            <h2 class="text-3xl font-display font-bold mb-8 pb-2 border-b-2 border-primary inline-block">Main Courses</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-6">
+                <!-- Biryani -->
+                <div class="menu-item bg-white rounded-lg overflow-hidden shadow-md">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2088&q=80" 
+                             alt="Biryani" 
+                             class="w-full h-full object-cover transition duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start">
+                            <h3 class="text-xl font-display font-bold">Chicken Biryani</h3>
+                            <span class="bg-accent text-white px-3 py-1 rounded-full text-sm">Rs. 450</span>
+                        </div>
+                        <p class="text-gray-600 mt-2">Fragrant basmati rice cooked with tender chicken and authentic biryani spices</p>
+                    </div>
+                </div>
+
+                <!-- Nihari -->
+                <div class="menu-item bg-white rounded-lg overflow-hidden shadow-md">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1603360946369-dc9bb6258143?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                             alt="Nihari" 
+                             class="w-full h-full object-cover transition duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start">
+                            <h3 class="text-xl font-display font-bold">Beef Nihari</h3>
+                            <span class="bg-accent text-white px-3 py-1 rounded-full text-sm">Rs. 550</span>
+                        </div>
+                        <p class="text-gray-600 mt-2">Slow-cooked beef shank in a rich, spicy gravy, served with naan</p>
+                    </div>
+                </div>
+
+                <!-- Karahi -->
+                <div class="menu-item bg-white rounded-lg overflow-hidden shadow-md">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1601050690117-94b5b7e50a33?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                             alt="Karahi" 
+                             class="w-full h-full object-cover transition duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start">
+                            <h3 class="text-xl font-display font-bold">Chicken Karahi</h3>
+                            <span class="bg-accent text-white px-3 py-1 rounded-full text-sm">Rs. 650</span>
+                        </div>
+                        <p class="text-gray-600 mt-2">Traditional wok-cooked chicken with tomatoes, ginger, and green chilies</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BBQ Section -->
+        <section id="bbq" class="menu-section mt-16">
+            <h2 class="text-3xl font-display font-bold mb-8 pb-2 border-b-2 border-primary inline-block">BBQ Specials</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-6">
+                <!-- Seekh Kebabs -->
+                <div class="menu-item bg-white rounded-lg overflow-hidden shadow-md">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1603360946369-dc9bb6258143?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                             alt="Seekh Kebabs" 
+                             class="w-full h-full object-cover transition duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start">
+                            <h3 class="text-xl font-display font-bold">Seekh Kebabs</h3>
+                            <span class="bg-accent text-white px-3 py-1 rounded-full text-sm">Rs. 350</span>
+                        </div>
+                        <p class="text-gray-600 mt-2">Minced beef skewers with traditional spices, grilled over charcoal</p>
+                    </div>
+                </div>
+
+                <!-- Chicken Tikka -->
+                <div class="menu-item bg-white rounded-lg overflow-hidden shadow-md">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1601050690117-94b5b7e50a33?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                             alt="Chicken Tikka" 
+                             class="w-full h-full object-cover transition duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start">
+                            <h3 class="text-xl font-display font-bold">Chicken Tikka</h3>
+                            <span class="bg-accent text-white px-3 py-1 rounded-full text-sm">Rs. 380</span>
+                        </div>
+                        <p class="text-gray-600 mt-2">Tender chicken pieces marinated in yogurt and spices, grilled to perfection</p>
+                    </div>
+                </div>
+
+                <!-- Malai Boti -->
+                <div class="menu-item bg-white rounded-lg overflow-hidden shadow-md">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                             alt="Malai Boti" 
+                             class="w-full h-full object-cover transition duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start">
+                            <h3 class="text-xl font-display font-bold">Malai Boti</h3>
+                            <span class="bg-accent text-white px-3 py-1 rounded-full text-sm">Rs. 420</span>
+                        </div>
+                        <p class="text-gray-600 mt-2">Creamy, tender chicken pieces marinated in cream, cheese, and mild spices</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- CTA Section -->
+    <section class="bg-primary text-white py-16">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <h2 class="text-3xl font-display font-bold mb-4">Ready to Experience Our Flavors?</h2>
+            <p class="text-lg max-w-2xl mx-auto mb-8">Book your table now or order online for delivery and takeaway</p>
+            <div class="flex flex-col md:flex-row justify-center gap-4">
+                <a href="Reservation Page.html" class="px-8 py-3 bg-white text-primary font-bold rounded-full hover:bg-opacity-90 transition">
+                    Reserve a Table
+                </a>
+                <a href="Contact Us .html" class="px-8 py-3 border-2 border-white text-white font-bold rounded-full hover:bg-white hover:text-primary transition">
+                    Contact Us
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-12">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold text-primary mb-4">EPICURE</h3>
+                    <p class="text-gray-300 mb-4">Authentic Pakistani cuisine prepared with love and tradition</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-300 hover:text-primary"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-primary"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-primary"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="Home Page.html" class="text-gray-300 hover:text-primary">Home</a></li>
+                        <li><a href="Menu Page.html" class="text-gray-300 hover:text-primary">Menu</a></li>
+                        <li><a href="About Page.html" class="text-gray-300 hover:text-primary">About Us</a></li>
+                        <li><a href="Contact Us .html" class="text-gray-300 hover:text-primary">Contact</a></li>
+                        <li><a href="Reservation Page.html" class="text-gray-300 hover:text-primary">Reservations</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-bold mb-4">Visit Us</h4>
+                    <address class="not-italic text-gray-300">
+                        <p class="mb-2">123 Gourmet Avenue, Foodie City FC 12345</p>
+                        <p class="mb-2">Phone: (123) 456-7890</p>
+                        <p>Email: info@epicure.com</p>
+                    </address>
+                    <p class="mt-4 text-gray-300">
+                        <span class="block">Mon-Thu: 11:00 - 22:00</span>
+                        <span class="block">Fri-Sat: 11:00 - 23:00</span>
+                        <span class="block">Sunday: 10:00 - 21:00</span>
+                    </p>
+                </div>
+            </div>
+            
+            <div class="mt-8 pt-8 border-t border-gray-700 text-center text-gray-400 text-sm">
+                <p>&copy; 2023 Epicure. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript for menu filtering
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show all menu sections initially
+            document.querySelectorAll('.menu-section').forEach(section => {
+                section.classList.add('active');
+            });
+            
+            // Add active class to "All Items" button
+            document.querySelector('.category-btn').classList.add('active');
+        });
+        
+        function filterMenu(category) {
+            // Update active button
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            
+            // Show/hide relevant sections
+            if (category === 'all') {
+                document.querySelectorAll('.menu-section').forEach(section => {
+                    section.classList.add('active');
+                });
+            } else {
+                document.querySelectorAll('.menu-section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                document.getElementById(category).classList.add('active');
+            }
+        }
+    </script>
+
+    <!-- Call to Action Section -->
+    <section class="bg-primary text-white py-16">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <h2 class="text-3xl font-display font-bold mb-4">Ready to Experience Our Cuisine?</h2>
+            <p class="text-lg max-w-2xl mx-auto mb-8">Book your table now for an unforgettable dining experience</p>
+            <a href="Reservation Page.html" class="px-8 py-3 bg-white text-primary font-bold rounded-full hover:bg-opacity-90 transition">
+                Make a Reservation
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-12">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <div>
+                    <h3 class="text-2xl font-bold text-primary mb-4">EPICURE</h3>
+                    <p class="opacity-80 mb-6">Elevating dining to an art form with every plate we serve.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-white hover:text-primary transition"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white hover:text-primary transition"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-white hover:text-primary transition"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white hover:text-primary transition"><i class="fab fa-yelp"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-bold mb-4">Explore</h4>
+                    <ul class="space-y-2 opacity-80">
+                        <li><a href="Home Page.html" class="hover:text-primary transition">Home</a></li>
+                        <li><a href="Menu Page.html" class="hover:text-primary transition">Our Menu</a></li>
+                        <li><a href="About Page.html" class="hover:text-primary transition">About Us</a></li>
+                        <li><a href="Contact Us .html" class="hover:text-primary transition">Contact</a></li>
+                        <li><a href="Reservation Page.html" class="hover:text-primary transition">Reservations</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-bold mb-4">Contact Us</h4>
+                    <ul class="space-y-2 opacity-80">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3"></i>
+                            <span>123 Gourmet Avenue, Foodie City FC 12345</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-phone mt-1 mr-3"></i>
+                            <span>(123) 456-7890</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-envelope mt-1 mr-3"></i>
+                            <span>hello@epicure.com</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-clock mt-1 mr-3"></i>
+                            <span>Mon-Sat: 11am-11pm, Sun: 11am-10pm</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-10 pt-8 text-center opacity-60 text-sm">
+                <p>&copy; 2023 Epicure Restaurant. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Mobile Menu Toggle Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
